@@ -2,10 +2,12 @@ let inputFieldInitiative = document.getElementById("inputFieldInitiative");
 let inputFieldName = document.getElementById("inputFieldName")
 let addName = document.getElementById("addName");
 let namesContainer = document.getElementById("namesContainer");
-let diceRollAll = document.getElementById("diceRollAll");
+let createTurnOrder = document.getElementById("createTurnOrder");
+let myTable = document.querySelector('#placeholder');
 
 var i = 1;
-const creatureList = [];
+var creatureList = [];
+let headers = ['Name', 'Base dice roll', 'Dice roll with initiative', 'Turn order'];
 
 addName.addEventListener("click", function() {
     // use the click function on button to add a new paragraph i.e 'p'
@@ -22,10 +24,8 @@ addName.addEventListener("click", function() {
     // add name and initiative value to creature object
     let creatureObject = creatureObjectMaker(inputFieldName.value, inputFieldInitiative.value)
 
-
     // push object to array
     creatureList.push(creatureObject);
-    
     console.log(creatureList);
 
     // append paragraph to To Do container
@@ -35,7 +35,7 @@ addName.addEventListener("click", function() {
     inputFieldInitiative.value = "";
     inputFieldName.value = "";
 
-    
+
     nameParagraph.addEventListener("click", function() {
         nameParagraph.style.textDecoration = "line-through";
     })
@@ -52,22 +52,55 @@ inputFieldInitiative.addEventListener("keypress", function(event) {
     }
 })
 
-// [TO FIX] dice roll button
-/* diceRollAll.addEventListener("click", function() {
-    // Get the element
-    var copiedNamesContainer = document.querySelector('#nameList');
-    
-    // Create copy of it
-    var clone = copiedNamesContainer.cloneNode();
-    // Update the ID and add a class
-    clone.id = 'newNameList';
-    // Inject it into the DOM
-    copiedNamesContainer.after(clone);  
+// "Create turn order" button
+createTurnOrder.addEventListener("click", function() {
+  
+  let sortedTurnOrder = creatureList.sort((a, b) => {
+    return b.diceRollPlusInitiative - a.diceRollPlusInitiative;
+  });
 
-    // Pass in names array
-    creatureObjectMaker(names);
+  sortedTurnOrder.forEach((creature, i) => {
+    creature.turnOrder = i + 1;
+  });
+
+  // print the sorted turn order list on the page
+  let table = document.createElement('table');
+  let headerRow = document.createElement('tr');
+
+  headers.forEach(headerText => {
+    let header = document.createElement('th');
+    let textNode = document.createTextNode(headerText);
+    header.appendChild(textNode);
+    headerRow.appendChild(header);
+  });
+
+  table.appendChild(headerRow);
+
+  creatureList.forEach(creature => {
+    let row = document.createElement('tr');
+
+    Object.values(creature).forEach(text => {
+      let cell = document.createElement('td');
+      let textNode = document.createTextNode(text);
+      cell.appendChild(textNode);
+      row.appendChild(cell);
+    })
+
+    table.appendChild(row);
+
+  });
+  
+
+  myTable.appendChild(table);
+
+  // print the sorted turn order list in console
+  creatureList.forEach(
+    (creature => {
+        console.log(`${creature.creatureName}: initiative ${creature.diceRollPlusInitiative}`)
+    })
+  )
+
 })
-*/
 
 
 
@@ -79,20 +112,6 @@ var dice20 = {
       return randomNumber;
     }
   }
-  
-// [TO USE] Prints dice roll to the page
-// function printNumber(number) {
-//     var placeholder = document.getElementById('placeholder');
-//     placeholder.innerHTML = number;
-//   }
-  
-//   var button = document.getElementById('diceRollAll');
-  
-//   button.onclick = function() {
-//     var result = dice20.roll();
-//     printNumber(result);
-//   };
-
 
 // Make a creature object
 function creatureObjectMaker(name, initiative) {
@@ -105,13 +124,29 @@ function creatureObjectMaker(name, initiative) {
 
   var creatureObject = {
     creatureName: name, 
-    diceRollWithInitiative: totalDiceRoll,
+    diceRollBase: diceRollInstance,
+    diceRollPlusInitiative: totalDiceRoll,
+    turnOrder: '',
   };
 
   console.log(creatureObject.creatureName, "base dice roll: ", diceRollInstance);
-  console.log(creatureObject.creatureName, "with initiative roll: ", creatureObject.diceRollWithInitiative);
+  console.log(creatureObject.creatureName, "with initiative roll: ", creatureObject.diceRollPlusInitiative);
 
   return creatureObject;
 }
 
 
+
+  
+// [extra] Prints dice roll to the page
+// function printNumber(number) {
+//     var placeholder = document.getElementById('placeholder');
+//     placeholder.innerHTML = number;
+//   }
+  
+//   var button = document.getElementById('createTurnOrder');
+  
+//   button.onclick = function() {
+//     var result = dice20.roll();
+//     printNumber(result);
+//   };

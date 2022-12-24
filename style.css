@@ -47,17 +47,17 @@ html, body {
     border: 0.5px solid rgb(198, 142, 10);
 }
 
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+  }
+
 /* .diceRollContainer {
     margin-top: 25px;
     border: 0.5px solid rgb(91, 246, 212);
-}
+} */
 
 #placeholder {
-    height: 100px;
-    width: 100px;
-    padding: 50px;
-    margin: 50px auto;
-    border: 1px solid gray;
-    border-radius: 10px;  
-    font-size:80px;
-  } */
+    display: block; 
+    margin-top: 20px;
+} 

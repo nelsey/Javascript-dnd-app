@@ -25,5 +25,9 @@ Overarching goals
     -> Make dice roll something within this new object
   - Fix dice roll
 4. [DONE] Push object into array
-5. Assign the turn order
-6. Output names and dice roll into UI
+5. [DONE] Assign the turn order
+6. [DONE] Output names, dice roll and turn order into UI
+
+
+Future:
+1. Add in logic to determine if monster/player and who goes first if they have same roll number
