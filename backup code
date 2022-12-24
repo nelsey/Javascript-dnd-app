@@ -5,7 +5,7 @@ let namesContainer = document.getElementById("namesContainer");
 let diceRollAll = document.getElementById("diceRollAll");
 
 var i = 1;
-const creatureList = [];
+const creature = [];
 
 addName.addEventListener("click", function() {
     // use the click function on button to add a new paragraph i.e 'p'
@@ -20,17 +20,17 @@ addName.addEventListener("click", function() {
     nameParagraph.innerText = inputFieldName.value;
 
     // add name and initiative value to creature object
-    let creatureObject = creatureObjectMaker(inputFieldName.value, inputFieldInitiative.value)
+    creatureObjectMaker(inputFieldName, inputFieldInitiative)
 
 
-    // push object to array
-    creatureList.push(creatureObject);
     
-    console.log(creatureList);
+    // push input value to array
+    creature.push(nameParagraph.innerText);
+    
+    console.log(creature);
 
     // append paragraph to To Do container
     namesContainer.appendChild(nameParagraph);
-
     //reset inputField box
     inputFieldInitiative.value = "";
     inputFieldName.value = "";
@@ -94,24 +94,20 @@ var dice20 = {
 //   };
 
 
-// Make a creature object
-function creatureObjectMaker(name, initiative) {
-  this.names = name;
-  this.initiative = initiative;
+// loop for creating objects from names array
+function creatureObjectMaker(names, initiative) {
+  
+  names.forEach((name => {
+    diceRollInstance = dice20.roll();
+    
+    let namesObject = {
+      creatureName: name, 
+      diceRoll: this.diceRollInstance,
+    };
+    
+    console.log(name, "dice roll is: ", diceRollInstance);
 
-  diceRollInstance = dice20.roll();
-
-  const totalDiceRoll = parseInt(diceRollInstance) + parseInt(initiative);
-
-  var creatureObject = {
-    creatureName: name, 
-    diceRollWithInitiative: totalDiceRoll,
-  };
-
-  console.log(creatureObject.creatureName, "base dice roll: ", diceRollInstance);
-  console.log(creatureObject.creatureName, "with initiative roll: ", creatureObject.diceRollWithInitiative);
-
-  return creatureObject;
+  }))
 }
 
 

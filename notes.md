@@ -19,9 +19,11 @@ iterating and creating unique ids for each inputfield div
 Overarching goals
 1. [DONE] Make basic interface 
 2. [DONE] Roll dice for all inputted names in array 
-3. Add in initiative bonuses
-  - [DONE] Add another inputfield for adding initiative bonus
+3. [DONE] Add in initiative bonuses
+  - Add another inputfield for adding initiative bonus
   - Put both name & initiative bonus into object
+    -> Make dice roll something within this new object
   - Fix dice roll
-4. Assign the turn order
-5. Output names and dice roll into UI
+4. [DONE] Push object into array
+5. Assign the turn order
+6. Output names and dice roll into UI
